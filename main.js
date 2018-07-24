@@ -1,13 +1,25 @@
 let n
 init()
-setInterval(()=>{
-    makeLeave(getImage(x(n)))
-        .one('transitionend',(x)=>{
-            makeEnter($(x.currentTarget))
-        })
-    makeCurrent(getImage(x(n+1)))
-    n++
-},2000)
+let timer = setTimer()
+document.addEventListener('visibilityChange',function(){
+    if (document.hidden) {
+        window.clearInterval(timer)
+    } else {
+        timer = setTimer()
+    }
+})
+
+
+function setTimer(){
+    return setInterval(()=>{
+        makeLeave(getImage(x(n)))
+            .one('transitionend',(x)=>{
+                makeEnter($(x.currentTarget))
+            })
+        makeCurrent(getImage(x(n+1)))
+        n++
+    },2000)
+}
 
 /***************************************************************************************/
 /***************************************************************************************/
