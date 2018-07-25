@@ -1,32 +1,31 @@
 let n
+let length
 init()
 let timer = setTimer()
-document.addEventListener('visibilityChange',function(){
-    if (document.hidden) {
+
+document.addEventListener('visibilitychange',()=>{
+    if(document.hidden){
         window.clearInterval(timer)
-    } else {
+    }else{
         timer = setTimer()
     }
 })
-
-
+/***************************************************************************************/
+/***************************************************************************************/
 function setTimer(){
     return setInterval(()=>{
         makeLeave(getImage(x(n)))
-            .one('transitionend',(x)=>{
-                makeEnter($(x.currentTarget))
+            .one('transitionend',(e)=>{
+                makeEnter($(e.currentTarget))
             })
         makeCurrent(getImage(x(n+1)))
         n++
     },2000)
 }
-
-/***************************************************************************************/
-/***************************************************************************************/
-
 function init() {
-    n=1
-    for (let i = 1; i<6; i++) {
+    n = 1
+    length = $('.images> img').length
+    for (let i = 1; i<=length; i++) {
         if(i === 1) {makeCurrent(getImage(i))}
         else {makeEnter(getImage(i))}
     }
@@ -42,8 +41,7 @@ function makeEnter($node) {
 }
 
 function x(n) {
-    let length = $('.images> img').length
-     return n = n % length ? n % length : length;
+    return n % length ? n % length : length
 }
 
 function getImage(n) {
